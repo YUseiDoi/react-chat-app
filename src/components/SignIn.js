@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -39,9 +39,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn({setName}) {
   const classes = useStyles();
+  const [disabled, setDisabled] = useState(true);
+  const [string, setString] = useState('');
 
+  useEffect(() => {
+      const disabled = string === '';
+      setDisabled(disabled);
+
+  }, [string]);
+
+  console.log(string);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -59,6 +68,7 @@ export default function SignIn() {
             label="ニックネーム"
             name="name"
             autoFocus
+            onChange={(e) => setString(e.target.value)}
           />
           <Button
             type="submit"
@@ -66,6 +76,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={disabled}
           >
             始める
           </Button>
